@@ -14,16 +14,16 @@ import statsmodels.api as sm
 
 # We load the spector dataset as a pandas dataframe
 # Of course, you can load your own datasets 
-data = sm.datasets.spector.load_pandas()
+spector = sm.datasets.spector.load_pandas()
 
 # We define y as the endogenous variable, and x as the 
 # exogenous variable
 # Note that if you load your own data, the methods endog 
 # and exog will not be available and you will have to 
 # explicitly define the endogenous and exogenous variables
-y, x = data.endog, data.exog
+y, x = spector.endog, spector.exog
 
-# We do the regression
+# We run the regression
 reg = sm.OLS(y, x).fit()
 
 # And here we can see the results in a very nice looking table

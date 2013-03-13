@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Example: Program Effectiveness &mdash; Introduction to Statistics 1.0 documentation</title>
+    <title>Linear Regression &mdash; Introduction to Statistics 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -48,7 +48,11 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <p>In this chapter we will focus on regression analysis using the Python library statsmodels. We already briefly discussed regression analysis in the section <em>Relation between two continuous variables</em>, subsection <em>Regression</em>. Regression analysis has some underlying assumptions, and we invite you to read this section again if you don&#8217;t remember these needed assumptions and also to familiarize yourself with the needed vocabulary.</p>
+  <div class="section" id="linear-regression">
+<h1>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter we will focus on regression analysis using the Python library <a class="reference external" href="http://statsmodels.sourceforge.net/">Statsmodels</a>.</p>
+<p>We already discussed the hypotheses and definitions of regression analysis in the section <a class="reference external" href="../html/statsModels.html">Statistical Models</a> and here we will illustrate regressions using data and functions from Statsmodels.</p>
+<p>Regression analysis has some underlying assumptions, and we invite you to read this section again if you don&#8217;t remember these needed assumptions and also to familiarize yourself with the needed vocabulary.</p>
 <p>A very general definition of a regression model is the following:</p>
 <div class="math">
 \[\label{eq:regmodel}
@@ -57,10 +61,49 @@ Y = f(x,\varepsilon)\]</div>
 <div class="math">
 \[\label{eq:simplereg}
 Y = X \beta + \varepsilon\]</div>
-<p><span class="math">\(Y\)</span> is a vector of dimension <span class="math">\((n \times 1)\)</span> and is called the endogenous variable, <span class="math">\(X\)</span> is a matrix of dimension <span class="math">\((n \times k)\)</span> where each colum is  an explanatory variable and :math: <cite>varepsilon</cite> is the error term. <span class="math">\(\beta\)</span> is the vector of dimension <span class="math">\((k \times 1)\)</span> and contains the parameters we want to estimate.</p>
+<p><span class="math">\(Y\)</span> is a vector of dimension <span class="math">\((n \times 1)\)</span> and is called the endogenous variable, <span class="math">\(X\)</span> is a matrix of dimension <span class="math">\((n \times k)\)</span> where each colum is  an explanatory variable and <span class="math">\(\varepsilon\)</span> is the error term. <span class="math">\(\beta\)</span> is the vector of dimension <span class="math">\((k \times 1)\)</span> and contains the parameters we want to estimate.</p>
 <div class="section" id="example-program-effectiveness">
-<h1>Example: Program Effectiveness<a class="headerlink" href="#example-program-effectiveness" title="Permalink to this headline">¶</a></h1>
+<h2>Example: Program Effectiveness<a class="headerlink" href="#example-program-effectiveness" title="Permalink to this headline">¶</a></h2>
 <p>Using data from Spector and Mazzeo (1980), we estimate a linear regression model with statsmodels.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;Linear Regression</span>
+<span class="sd">Estimation of a linear regression model using the Spector and Mazzeo (1980) data set.</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Author: Bruno Rodrigues</span>
+<span class="sd">Date:   March-2013</span>
+<span class="sd">Ver:    1.0</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c"># For this we only need to import statsmodels</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="kn">as</span> <span class="nn">sm</span>
+
+<span class="c"># We load the spector dataset as a pandas dataframe</span>
+<span class="c"># Of course, you can load your own datasets </span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">spector</span><span class="o">.</span><span class="n">load_pandas</span><span class="p">()</span>
+
+<span class="c"># We define y as the endogenous variable, and x as the </span>
+<span class="c"># exogenous variable</span>
+<span class="c"># Note that if you load your own data, the methods endog </span>
+<span class="c"># and exog will not be available and you will have to </span>
+<span class="c"># explicitly define the endogenous and exogenous variables</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">endog</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">exog</span>
+
+<span class="c"># We run the regression</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c"># And here we can see the results in a very nice looking table</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="c"># We can only take a look at the parameter values though</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">params</span>
+
+<span class="c"># We can also extract the residuals</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">resid</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -69,6 +112,14 @@ Y = X \beta + \varepsilon\]</div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="StatsFH.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Linear Regression</a><ul>
+<li><a class="reference internal" href="#example-program-effectiveness">Example: Program Effectiveness</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="statsSurvival.html"
                         title="previous chapter">Survival Probabilities</a></p>

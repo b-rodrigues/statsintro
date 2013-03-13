@@ -100,7 +100,7 @@ Analysis of Survival Times
 
    statsSurvival
    
-Analysis of Survival Times
+Linear Regression Analysis
 ==========================
 
 .. toctree::
