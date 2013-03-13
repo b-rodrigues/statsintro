@@ -99,7 +99,15 @@ Analysis of Survival Times
    :maxdepth: 2
 
    statsSurvival
+   
+Analysis of Survival Times
+==========================
 
+.. toctree::
+   :maxdepth: 2
+
+   regAnalysis
+   
 Indices and tables
 ==================
 

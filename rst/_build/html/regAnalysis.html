@@ -1,7 +1,5 @@
 
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &mdash; Introduction to Statistics 1.0 documentation</title>
+    <title>Example: Program Effectiveness &mdash; Introduction to Statistics 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -28,15 +26,19 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Introduction to Statistics 1.0 documentation" href="index.html" /> 
+    <link rel="top" title="Introduction to Statistics 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Survival Probabilities" href="statsSurvival.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="#" title="General Index"
+          <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="statsSurvival.html" title="Survival Probabilities"
+             accesskey="P">previous</a> |</li>
         <li><a href="StatsFH.html">Introduction to Statistics 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -46,11 +48,19 @@
         <div class="bodywrapper">
           <div class="body">
             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <p>In this chapter we will focus on regression analysis using the Python library statsmodels. We already briefly discussed regression analysis in the section <em>Relation between two continuous variables</em>, subsection <em>Regression</em>. Regression analysis has some underlying assumptions, and we invite you to read this section again if you don&#8217;t remember these needed assumptions and also to familiarize yourself with the needed vocabulary.</p>
+<p>A very general definition of a regression model is the following:</p>
+<div class="math">
+\[\label{eq:regmodel}
+Y = f(x,\varepsilon)\]</div>
+<p>In the case of a linear regression model, the function f is simply the affine function, and the model can be rewritten as:</p>
+<div class="math">
+\[\label{eq:simplereg}
+Y = X \beta + \varepsilon\]</div>
+<p><span class="math">\(Y\)</span> is a vector of dimension <span class="math">\((n \times 1)\)</span> and is called the endogenous variable, <span class="math">\(X\)</span> is a matrix of dimension <span class="math">\((n \times k)\)</span> where each colum is  an explanatory variable and :math: <cite>varepsilon</cite> is the error term. <span class="math">\(\beta\)</span> is the vector of dimension <span class="math">\((k \times 1)\)</span> and contains the parameters we want to estimate.</p>
+<div class="section" id="example-program-effectiveness">
+<h1>Example: Program Effectiveness<a class="headerlink" href="#example-program-effectiveness" title="Permalink to this headline">¶</a></h1>
+<p>Using data from Spector and Mazzeo (1980), we estimate a linear regression model with statsmodels.</p>
 </div>
 
 
@@ -59,9 +69,14 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-
-   
-
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="statsSurvival.html"
+                        title="previous chapter">Survival Probabilities</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/regAnalysis.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -83,8 +98,11 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="#" title="General Index"
+          <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="statsSurvival.html" title="Survival Probabilities"
+             >previous</a> |</li>
         <li><a href="StatsFH.html">Introduction to Statistics 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>

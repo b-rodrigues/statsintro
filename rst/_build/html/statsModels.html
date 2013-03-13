@@ -52,7 +52,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <img alt="_images/title_models.png" src="_images/title_models.png" style="height: 100px;" />
+  <img alt="..\Images\title_models.png" src="..\Images\title_models.png" style="height: 100px;" />
 <div class="section" id="model-language">
 <h1>Model language<a class="headerlink" href="#model-language" title="Permalink to this headline">¶</a></h1>
 <p>The mini-language commonly used now in statistics to describe formulas
@@ -346,70 +346,6 @@ predictor variables and the response variable when the predictors are
 correlated with each other and are not assigned following a study
 design.
 (See also the ipython notebook <a class="reference external" href="http://nbviewer.ipython.org/url/work.thaslwanter.at/Stats/ipynb/modeling.ipynb">modeling.ipynb</a>)</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;Simple linear models.</span>
-<span class="sd">- &quot;model_formulas&quot; is based on examples in Kaplan &quot;Statistical Modeling&quot;.</span>
-<span class="sd">- &quot;polynomial_regression&quot; shows how to work with simple design matrices, like MATLAB&#39;s &quot;regress&quot; command.</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Author: Thomas Haslwanter</span>
-<span class="sd">Date:   Jan-2013</span>
-<span class="sd">Ver:    2.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
-
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">import</span> <span class="nn">statsmodels.regression.linear_model</span> <span class="kn">as</span> <span class="nn">sm</span>
-<span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-
-<span class="k">def</span> <span class="nf">model_formulas</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Define models through formulas &#39;&#39;&#39;</span>
-    <span class="c"># Get the dta</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s">r&#39;.\data_kaplan\swim100m.csv&#39;</span><span class="p">)</span>
-    
-    <span class="c"># Different models</span>
-    <span class="n">model1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">&quot;time ~ sex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c"># one factor</span>
-    <span class="n">model2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">&quot;time ~ sex + year&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>   <span class="c"># two factors</span>
-    <span class="n">model3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">&quot;time ~ sex * year&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>   <span class="c"># two factors with interaction</span>
-    
-    <span class="c"># Model information</span>
-    <span class="k">print</span> <span class="n">model1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-    <span class="k">print</span> <span class="n">model2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-    <span class="k">print</span> <span class="n">model3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-    
-    <span class="c"># ANOVAs</span>
-    <span class="k">print</span> <span class="s">&#39;-----------------------------------------------------------------&#39;</span>
-    <span class="k">print</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&#39;-----------------------------------------------------------------&#39;</span>
-    <span class="k">print</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">model2</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&#39;-----------------------------------------------------------------&#39;</span>
-    <span class="k">print</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">model3</span><span class="p">)</span>
-    
-<span class="k">def</span> <span class="nf">polynomial_regression</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39; Define the model directly through the design matrix. Similar to MATLAB&#39;s &quot;regress&quot; command &#39;&#39;&#39;</span>
-
-    <span class="c"># Generate the data</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-    
-    <span class="c"># Make the fit. Note that this is another &quot;OLS&quot; than the one in &quot;model_formulas&quot;!</span>
-    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)),</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-        
-    <span class="c"># Display the results</span>
-    <span class="k">print</span> <span class="s">&#39;Summary:&#39;</span>
-    <span class="k">print</span> <span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&#39;The fit parameters are: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
-    <span class="k">print</span> <span class="s">&#39;The confidence intervals are:&#39;</span>
-    <span class="k">print</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">model_formulas</span><span class="p">()</span>
-    <span class="n">polynomial_regression</span><span class="p">()</span>
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="bootstrapping">
@@ -424,48 +360,6 @@ provide estimates of its variability. In a case where the distribution
 of the initial sample is unknown, bootstrapping is of especial help in
 that it provides information about the distribution.
 (See also the ipython notebook <a class="reference external" href="http://nbviewer.ipython.org/url/work.thaslwanter.at/Stats/ipynb/bootstrap.ipynb">bootstrap.ipynb</a>)</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39; Example of bootstrapping the confidence interval for the mean of a sample distribution</span>
-<span class="sd">Since no bootstrapping is implemented in Python, you first have to install the the</span>
-<span class="sd">scikits-bootstrapping module </span>
-<span class="sd">   pip install -e git+http://github.org/cgevans/scikits-bootstrap.git#egg=Package  </span>
-<span class="sd">&#39;&#39;&#39;</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Author:  Thomas Haslwanter</span>
-<span class="sd">Date:    March-2013</span>
-<span class="sd">Version: 1.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
-
-<span class="kn">import</span> <span class="nn">scipy</span> <span class="kn">as</span> <span class="nn">sp</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">import</span> <span class="nn">scikits.bootstrap</span> <span class="kn">as</span> <span class="nn">bootstrap</span>
-
-<span class="k">def</span> <span class="nf">generate_data</span><span class="p">():</span>
-    <span class="c"># Generate a non-normally distributed datasample</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-    
-    <span class="c"># Show the data</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;Non-normally distributed dataset: Press any key to continue&#39;</span><span class="p">)</span>
-    <span class="c"># plt.show()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">waitforbuttonpress</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>    
-    
-    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    
-<span class="k">def</span> <span class="nf">calc_bootstrap</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c"># Calculate the bootstrap</span>
-    <span class="n">CIs</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="o">.</span><span class="n">ci</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">statfunction</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
-    
-    <span class="c"># Print the data: the &quot;*&quot; turns the array CIs into a list</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;The conficence intervals for the mean are: {0} - {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">CIs</span><span class="p">))</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">()</span>
-    <span class="n">calc_bootstrap</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 
 
@@ -542,7 +436,7 @@ that it provides information about the distribution.
     </div>
     <div class="footer">
         &copy; Copyright March 2013, Thomas Haslwanter.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>
